@@ -29,7 +29,7 @@ public class SlimChart extends View {
     private int strokeWidth = 6;
     private int defaultSize;
     private int color;
-    private int[] colors;
+    private ArrayList<Integer> colors;
     private float density;
     private boolean roundEdges;
     private int animDuration = 1000;
@@ -138,13 +138,13 @@ public class SlimChart extends View {
         if (stats != null){
             if (colors == null) colors = createColors();
 
-            if (colors.length != stats.size()) {
+            if (colors.size() != stats.size()) {
                 Log.e("SlimChart", "Stats and colors have different lengths, will be used default colors...");
                 colors = createColors();
             }
 
             for (int i = 0; i < stats.size(); i++) {
-                drawChart(canvas, colors[i], calculatePercents(stats.get(i)));
+                drawChart(canvas, colors.get(i), calculatePercents(stats.get(i)));
             }
         }else {
             drawChart(canvas, color, calculatePercents(FULL_CIRCLE_ANGLE));
@@ -156,16 +156,16 @@ public class SlimChart extends View {
         return degree * FULL_CIRCLE_ANGLE / maxStat;
     }
 
-    private int[] createColors(){
+    private ArrayList<Integer> createColors(){
+        ArrayList<Integer> colors = new ArrayList<>();
         int chartsCount = stats.size();
         float add = .9f / chartsCount;
-        int[] colors = new int[chartsCount];
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         hsv[2] = .1f;
         for (int i = 0; i < chartsCount; i++) {
             hsv[2] += add;
-            colors[i] = Color.HSVToColor(hsv);
+            colors.add(Color.HSVToColor(hsv));
         }
         return colors;
     }
@@ -197,80 +197,66 @@ public class SlimChart extends View {
         canvas.drawArc(chartRect, 90, degree, false, paint);
     }
 
-    public void setRoundEdges(boolean roundEdges) {
-        this.roundEdges = roundEdges;
-        invalidate();
-    }
-
-    public boolean isRoundEdgesEnabled() {
-        return roundEdges;
-    }
-
     public void setStats(ArrayList<Float> stats) {
         Collections.sort(stats, Collections.<Float>reverseOrder());
         this.stats = stats;
         maxStat = stats.get(0); //First stat is the largest, save for arc calculations.
         invalidate();
     }
-
     public ArrayList<Float> getStats() {
         return stats;
     }
 
-    public void setColors(int... colors) {
+    public void setColor(ArrayList<Integer> colors) {
         this.colors = colors;
     }
-
-    public int[] getColors() {
-        return colors;
-    }
-
-    public void setColorInt(@ColorInt int color) {
+    public void setColor(@ColorInt int color) {
         this.colors = null;
         this.color = color;
         invalidate();
     }
-
-    public void setColorRes(@ColorRes int colorResId) {
-        setTextColorInt(ContextCompat.getColor(getContext(), colorResId));
-    }
+    public void setColorRes(@ColorRes int colorResId) { setColor(ContextCompat.getColor(getContext(), colorResId)); }
 
     public int getColor() {
         return color;
     }
-
-    public void setStrokeWidth(int strokeWidth) {
-        this.strokeWidth = (int) (strokeWidth * density);
-        invalidate();
-    }
-
-    public int getStrokeWidth() {
-        return strokeWidth;
+    public ArrayList<Integer> getColors() {
+        return colors;
     }
 
     public void setText(String text) {
         this.text = text;
         invalidate();
     }
-
     public void setText(@StringRes int textIdRes){
         setText(getContext().getString(textIdRes));
     }
-
     public String getText() {
         return text;
     }
 
-    public void setTextColorInt(@ColorInt int textColorInt) {
+    public void setTextColor(@ColorInt int textColorInt) {
         this.textColor = textColorInt;
         invalidate();
     }
-
-    public void setTextColorRes(@ColorRes int textColorResId){
-        setTextColorInt(ContextCompat.getColor(getContext(), textColorResId));
-    }
-
+    public void setTextColorRes(@ColorRes int textColorResId){ setTextColor(ContextCompat.getColor(getContext(), textColorResId)); }
     public int getTextColor() {
         return textColor;
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        this.strokeWidth = (int) (strokeWidth * density);
+        invalidate();
+    }
+    public int getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    public void setRoundEdges(boolean roundEdges) {
+        this.roundEdges = roundEdges;
+        invalidate();
+    }
+    public boolean isRoundEdgesEnabled() {
+        return roundEdges;
     }
 }
