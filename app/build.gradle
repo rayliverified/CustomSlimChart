@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "stream.slimchartapp"
         minSdkVersion 14
@@ -24,6 +23,6 @@ dependencies {
     }
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
+    implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
     implementation project(path: ':slimchart')
 }
