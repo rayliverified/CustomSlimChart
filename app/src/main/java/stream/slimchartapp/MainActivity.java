@@ -2,10 +2,10 @@ package stream.slimchartapp;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AppCompatActivity;
 import stream.slimchart.SlimChart;
 import stream.slimchart.Stat;
 
@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
 //        slimChart.setColors(colors);
 
         /* Second way to set colors:
-        *
-        * slimChart.setColors(
-        *               Color.rgb(46, 41,78),
-        *               Color.rgb(127, 22, 101),
-        *               Color.rgb(217, 3, 104),
-        *               Color.rgb(247, 76, 110));
-        * */
+         *
+         * slimChart.setColors(
+         *               Color.rgb(46, 41,78),
+         *               Color.rgb(127, 22, 101),
+         *               Color.rgb(217, 3, 104),
+         *               Color.rgb(247, 76, 110));
+         * */
 
         //Create array for your stats
         ArrayList<Float> stats = new ArrayList<>();
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         slimChart.setStatList(statList);
 
         /* Second way to set stats:
-        *
-        * slimChart.setStats(100, 85, 40, 25);
-        * */
+         *
+         * slimChart.setStats(100, 85, 40, 25);
+         * */
 
         //Play animation
         slimChart.setStartAnimationDuration(2000);
